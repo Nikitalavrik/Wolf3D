@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/02 17:24:08 by nlavrine          #+#    #+#              #
-#    Updated: 2019/11/02 17:49:49 by nlavrine         ###   ########.fr        #
+#    Updated: 2019/11/03 13:18:12 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,11 @@
 NAME = wolf3d
 
 SRC =	main.c	\
-
+		error.c	\
+		parse.c	\
+		split.c	\
+		sys_out.c	\
+		wolf3d.c
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror 
@@ -25,6 +29,8 @@ OBJ_DIR2 = obj/fractals
 LIB = libft/libft.a
 PRINTF = libft/ft_printf/libftprintf.a
 GREEN = \033[0;32m
+INCLUDE_SDL2 = SDL2/include/SDL2
+LIB_SDL2 = SDL2/lib/
 
 SRCS = $(addprefix $(SRC_DIR)/,$(SRC))
 
@@ -34,12 +40,12 @@ all: $(NAME)
 
 $(NAME): $(LIB) $(PRINTF) $(OBJS)
 		@echo "$(GREEN)Compile $(NAME)"
-		@$(CC) $(FLAGS) -lm  -lpthread $(OBJS) $(PRINTF) $(LIB) $(PRINTF) -o $(NAME)
+		@$(CC) $(FLAGS) -lm  -lpthread -L$(LIB_SDL2) -lSDL2 $(OBJS) $(PRINTF) $(LIB) $(PRINTF) -o $(NAME) -I $(INCLUDE_SDL2)
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 		@mkdir -p $(OBJ_DIR)
 		@mkdir -p $(OBJ_DIR2)
-		@$(CC) $(FLAGS) -o $@ -c $< -I $(H_DIR) 
+		@$(CC) $(FLAGS) -o $@ -c $< -I $(H_DIR) -I $(INCLUDE_SDL2)
 
 $(LIB):
 	@echo "$(GREEN)Compile libft"

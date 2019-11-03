@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/02 17:24:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/03 12:40:57 by nlavrine         ###   ########.fr       */
+/*   Created: 2019/11/02 19:40:06 by nlavrine          #+#    #+#             */
+/*   Updated: 2019/11/02 19:40:07 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "ft_wolf.h"
 
-int		main(int argc, char **argv)
+void		print_error(char *message)
 {
-	t_coords sizes;
-	t_coords **coords;
-	t_wolf3d	*wolf3d;
+	int i;
 
-	if (argc != 2)
-		print_error("Whoops, what file I need to open ?\n");
-	coords = parse_file(&sizes, argv[1]);
-	print_coords(coords, sizes.y, sizes.x);
-	wolf3d = init_wolf3d();
-	return (0);
+	i = 0;
+	while (message[i])
+	{
+		write(2, &(message[i]), 1);
+		i++;
+	}
+	exit(0);
 }

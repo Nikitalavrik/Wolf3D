@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/02 17:24:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/03 12:40:57 by nlavrine         ###   ########.fr       */
+/*   Created: 2019/11/02 19:33:00 by nlavrine          #+#    #+#             */
+/*   Updated: 2019/11/02 19:33:12 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_wolf.h"
 
-int		main(int argc, char **argv)
+int				split_len(char **splited)
 {
-	t_coords sizes;
-	t_coords **coords;
-	t_wolf3d	*wolf3d;
+	int	count;
 
-	if (argc != 2)
-		print_error("Whoops, what file I need to open ?\n");
-	coords = parse_file(&sizes, argv[1]);
-	print_coords(coords, sizes.y, sizes.x);
-	wolf3d = init_wolf3d();
-	return (0);
+	count = 0;
+	while (splited[count])
+		count++;
+	return (count);
+}
+
+void			free_splited(char **splited, int size)
+{
+	int i;
+
+	i = 0;
+	while (i < size)
+	{
+		ft_memdel((void **)&splited[i]);
+		i++;
+	}
+	ft_memdel((void **)&splited);
 }

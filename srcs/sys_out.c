@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sys_out.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/02 17:24:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/03 12:40:57 by nlavrine         ###   ########.fr       */
+/*   Created: 2019/11/02 19:40:18 by nlavrine          #+#    #+#             */
+/*   Updated: 2019/11/03 12:31:37 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_wolf.h"
 
-int		main(int argc, char **argv)
+void	print_coords(t_coords **coords, int max_y, int max_x)
 {
-	t_coords sizes;
-	t_coords **coords;
-	t_wolf3d	*wolf3d;
+	int	x;
+	int	y;
 
-	if (argc != 2)
-		print_error("Whoops, what file I need to open ?\n");
-	coords = parse_file(&sizes, argv[1]);
-	print_coords(coords, sizes.y, sizes.x);
-	wolf3d = init_wolf3d();
-	return (0);
+	y = 0;
+	while (y < max_y)
+	{
+		x = 0;
+		while (x < max_x)
+		{
+			ft_printf("%i ", coords[y][x].texture);
+			x++;
+		}
+		ft_printf("\n");
+		y++;
+	}
 }
