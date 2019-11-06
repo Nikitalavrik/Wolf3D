@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/02 17:24:08 by nlavrine          #+#    #+#              #
-#    Updated: 2019/11/03 16:32:22 by nlavrine         ###   ########.fr        #
+#    Updated: 2019/11/06 15:00:54 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRC =	main.c	\
 		loop.c		\
 		draw.c		\
 		ray_casting.c	\
-		control.c
+		control.c		\
+		textures.c
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror 
@@ -33,6 +34,8 @@ OBJ_DIR2 = obj/fractals
 LIB = libft/libft.a
 PRINTF = libft/ft_printf/libftprintf.a
 GREEN = \033[0;32m
+IMG_FRAME = -F . -framework SDL2_image -rpath .
+
 
 SRCS = $(addprefix $(SRC_DIR)/,$(SRC))
 
@@ -42,7 +45,7 @@ all: $(NAME)
 
 $(NAME): $(LIB) $(PRINTF) $(OBJS)
 		@echo "$(GREEN)Compile $(NAME)"
-		@$(CC) $(FLAGS)  -lpthread  $(OBJS) $(PRINTF) $(LIB) $(PRINTF) -o $(NAME) -lSDL2 -lm 
+		@$(CC) $(FLAGS)  -lpthread  -lm -framework SDL2 $(IMG_FRAME) $(OBJS) $(PRINTF) $(LIB) $(PRINTF) -o $(NAME) 
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 		@mkdir -p $(OBJ_DIR)

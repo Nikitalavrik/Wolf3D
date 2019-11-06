@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 14:27:14 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/03 18:26:54 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/06 17:28:32 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	mage(t_wolf3d *wolf3d, double ray_x, double ray_y, int x)
 	t_coords	map;
 	double		dist;
 	int			linedist;
-	int			colors[5] = {0xf9ed69, 0xf08a5d, 0xb83b5e, 0x6a2c70};
+	double		dist_without_fixing;
 
 	map.x = (int)wolf3d->player->x;
 	map.y = (int)wolf3d->player->y;
@@ -61,14 +61,22 @@ void	mage(t_wolf3d *wolf3d, double ray_x, double ray_y, int x)
 	wolf3d->player->delta_y = fabs(1 / ray_y);
 	choose_step_ray(wolf3d->player, ray_x, ray_y, map.x, map.y);	
 	cast_ray(wolf3d->player, wolf3d->coords, &map);
-	dist = map.z == 1 ? (map.y - wolf3d->player->y + (1 - wolf3d->player->step_y) / 2) / ray_y :\
-					(map.x - wolf3d->player->x + (1 - wolf3d->player->step_x) / 2) / ray_x;
+	dist = map.z == 1 ? (map.y - wolf3d->player->y + ((1 - wolf3d->player->step_y) >> 1)) / ray_y :\
+					(map.x - wolf3d->player->x + ((1 - wolf3d->player->step_x) >> 1)) / ray_x;
 	linedist = (int)floor(WALL_HEIGHT / dist);
-	line.x = WALL_HEIGHT / 2 - linedist / 2;
+	line.x = WALL_HALF_HEIGHT - (linedist >> 1);
 	line.x = line.x < 0 ? 0 : line.x;
-	line.y = WALL_HEIGHT / 2 + linedist / 2;
+	line.y = WALL_HALF_HEIGHT + (linedist >> 1);
 	line.y = line.y >= WALL_HEIGHT ? WALL_HEIGHT - 1 : line.y;
-	draw_line(wolf3d, x, line, colors[wolf3d->coords[map.y][map.x].texture]);
+	dist_without_fixing = map.z ? wolf3d->player->x + dist * ray_x : wolf3d->player->y + dist * ray_y;
+	dist_without_fixing -= floor(dist_without_fixing);
+	line.z = dist_without_fixing * 64;
+	if ((!map.z && ray_x > 0) || (map.z && ray_y < 0))
+		line.z = 64 - line.z - 1;
+	line.texture = wolf3d->coords[map.y][map.x].texture - 1;
+	draw_textures(wolf3d, x, line, linedist);
+	draw_floor(wolf3d, ray_x, ray_y, dist, line.y, map, dist_without_fixing, x);
+	// draw_line(wolf3d, x, line, colors[wolf3d->coords[map.y][map.x].texture]);
 }
 
 void	draw_surface(t_wolf3d *wolf3d)
@@ -81,7 +89,7 @@ void	draw_surface(t_wolf3d *wolf3d)
 	x = 0;
 	while (x < WIDTH)
 	{
-		cX = 2.0 * x / (double)WIDTH - 1.0;
+		cX = (x << 1) / (double)WIDTH - 1.0;
 		ray_x = wolf3d->player->dir_x + wolf3d->player->plane_x * cX;
 		ray_y = wolf3d->player->dir_y + wolf3d->player->plane_y * cX;
 		mage(wolf3d, ray_x, ray_y, x);
