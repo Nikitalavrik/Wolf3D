@@ -21,7 +21,8 @@ SRC =	main.c	\
 		wolf3d.c	\
 		loop.c		\
 		draw.c		\
-		ray_casting.c
+		ray_casting.c	\
+		control.c
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror 
@@ -41,7 +42,7 @@ all: $(NAME)
 
 $(NAME): $(LIB) $(PRINTF) $(OBJS)
 		@echo "$(GREEN)Compile $(NAME)"
-		@$(CC) $(FLAGS) -lm  -lpthread -framework SDL2 $(OBJS) $(PRINTF) $(LIB) $(PRINTF) -o $(NAME) 
+		@$(CC) $(FLAGS)  -lpthread  $(OBJS) $(PRINTF) $(LIB) $(PRINTF) -o $(NAME) -lSDL2 -lm 
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 		@mkdir -p $(OBJ_DIR)

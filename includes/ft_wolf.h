@@ -21,7 +21,7 @@
 # include <SDL2/SDL.h>
 # define WIDTH 1280
 # define HEIGHT 720
-# define WALL_HEIGHT HEIGHT / 2
+# define WALL_HEIGHT HEIGHT
 # define ROT 0.1
 
 typedef struct	s_coords
@@ -39,8 +39,8 @@ typedef struct	s_player
 	double		y;
 	int			step_x;
 	int			step_y;
-	int			len_ray_x;
-	int			len_ray_y;
+	double		len_ray_x;
+	double		len_ray_y;
 	double		dir_x;
 	double		dir_y;
 	double		plane_x;
@@ -66,6 +66,8 @@ int				split_len(char **splited);
 t_player		*init_player(void);
 t_wolf3d		*init_wolf3d(t_coords sizes, t_coords **coords);
 int				main_loop(t_wolf3d *wolf3d);
+
+int				detect_event(t_wolf3d *wolf3d);
 
 void			draw_surf(t_wolf3d *wolf3d);
 void			draw_surface(t_wolf3d *wolf3d);

@@ -95,5 +95,6 @@ t_coords		**parse_file(t_coords *size, char *filename)
 	coords = check_lines(fd, &size->x, coords, line);
 	if (size->x == 1 && size->y == 1)
 		print_error("Small map\n");
+	close(fd);
 	return (coords);
 }
