@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/02 17:24:08 by nlavrine          #+#    #+#              #
-#    Updated: 2019/11/06 15:00:54 by nlavrine         ###   ########.fr        #
+#    Updated: 2019/11/08 18:11:51 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,19 @@ OBJ_DIR2 = obj/fractals
 LIB = libft/libft.a
 PRINTF = libft/ft_printf/libftprintf.a
 GREEN = \033[0;32m
-IMG_FRAME = -F . -framework SDL2_image -rpath .
+IMG_FRAME = -framework SDL2 -F . -framework SDL2_image -framework SDL2_ttf -rpath .
+
+INCLUDES = 	-I./frameworks/SDL2.framework/Headers/ \
+			-I./frameworks/SDL2_image.framework/Headers/ \
+			-I./frameworks/SDL2_ttf.framework/Headers/ \
+			-I./frameworks/SDL2_mixer.framework/Headers/ \
+
+
+FRAMEWORKS =  	-F./frameworks \
+    			-rpath ./frameworks \
+    			-framework AppKit -framework OpenGL \
+    			-framework SDL2 -framework SDL2_image \
+    			-framework SDL2_ttf \
 
 
 SRCS = $(addprefix $(SRC_DIR)/,$(SRC))
@@ -45,12 +57,12 @@ all: $(NAME)
 
 $(NAME): $(LIB) $(PRINTF) $(OBJS)
 		@echo "$(GREEN)Compile $(NAME)"
-		@$(CC) $(FLAGS)  -lpthread  -lm -framework SDL2 $(IMG_FRAME) $(OBJS) $(PRINTF) $(LIB) $(PRINTF) -o $(NAME) 
+		@$(CC) $(FLAGS)  -lpthread  -lm $(FRAMEWORKS) $(OBJS) $(PRINTF) $(LIB) $(PRINTF) -o $(NAME) $(INCLUDES)
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 		@mkdir -p $(OBJ_DIR)
 		@mkdir -p $(OBJ_DIR2)
-		@$(CC) $(FLAGS) -o $@ -c $< -I $(H_DIR)
+		@$(CC) $(FLAGS) -o $@ -c $< -I $(H_DIR) $(INCLUDES)
 
 $(LIB):
 	@echo "$(GREEN)Compile libft"

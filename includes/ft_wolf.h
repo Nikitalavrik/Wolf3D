@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 17:24:58 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/06 17:26:59 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/08 18:15:13 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 # include "../libft/ft_printf/include/ft_printf.h"
 # include <math.h>
 # include <time.h>
-# include <SDL2/SDL.h>
-# include "../SDL2_image.framework/Headers/SDL_image.h"
+# include "SDL.h"
+# include "SDL_image.h"
+# include "SDL_ttf.h"
 # define TEXTURE_DIR "textures"
 # define WIDTH 1280
 # define HEIGHT 720
@@ -78,7 +79,7 @@ t_coords		**parse_file(t_coords *size, char *filename);
 void			free_splited(char **splited, int size);
 int				split_len(char **splited);
 
-t_player		*init_player(void);
+t_player		*init_player(t_coords **coords, t_coords size);
 t_wolf3d		*init_wolf3d(t_coords sizes, t_coords **coords);
 int				main_loop(t_wolf3d *wolf3d);
 
@@ -86,13 +87,14 @@ int				detect_event(t_wolf3d *wolf3d);
 
 void			load_textures(t_wolf3d *wolf3d);
 
-void			draw_surf(t_wolf3d *wolf3d);
+void			draw_fps(t_wolf3d *wolf3d);
+void			draw_minimap(t_wolf3d *wolf3d);
 void			draw_surface(t_wolf3d *wolf3d);
 void			draw_line(t_wolf3d *wolf3d, int x, t_coords line, int color);
 void			draw_textures(t_wolf3d *wolf3d, int x, t_coords line, int lineheight);
 void			draw_floor(t_wolf3d *wolf3d, double ray_x, double ray_y, double dist, int y_end, t_coords map, double dist_without_fixing, int x);
 
-void			print_error(char *message);
+void			print_error(char *manage, char *message);
 void			print_coords(t_coords **coords, int max_y, int max_x);
 
 #endif

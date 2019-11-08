@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 17:24:41 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/06 17:27:36 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/08 16:14:59 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,17 @@ int		main(int argc, char **argv)
 	t_wolf3d	*wolf3d;
 
 	if (argc != 2)
-		print_error("Whoops, what file I need to open ?\n");
+		print_error("Check open : ", "whoops, what file I need to open ?\n");
+	ft_printf("Parsing ...\n");
 	coords = parse_file(&sizes, argv[1]);
-	print_coords(coords, sizes.y, sizes.x);
+	// print_coords(coords, sizes.y, sizes.x);
+	ft_printf("Structure init ...\n");
 	wolf3d = init_wolf3d(sizes, coords);
-	wolf3d->player = init_player();
+	wolf3d->player = init_player(coords, sizes);
+	ft_printf("Loading textures ...\n");
 	load_textures(wolf3d);
-	ft_printf("wow\n");
+	// exit(0);
+	ft_printf("Let`s the play begin !\n");
 	main_loop(wolf3d);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:38:31 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/06 19:12:46 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/08 19:37:52 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,12 @@ int		main_loop(t_wolf3d *wolf3d)
 		start_clock = SDL_GetTicks();
 		ft_bzero(wolf3d->surf->pixels, WIDTH * HEIGHT * sizeof(int));
 		draw_surface(wolf3d);
+		draw_minimap(wolf3d);
 		quit = detect_event(wolf3d);
-		SDL_UpdateWindowSurface(wolf3d->win);
 		wolf3d->frame = (SDL_GetTicks() - start_clock) / 1000.0;
-		// ft_printf("fps = %f\n", 1.0 / wolf3d->frame);
+		// draw_fps(wolf3d);
+		// SDL_Flip(wolf3d->surf);
+		SDL_UpdateWindowSurface(wolf3d->win);
 	}
-	// SDL_FreeCursor(cursor);
 	return (0);
 }

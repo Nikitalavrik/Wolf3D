@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:55:43 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/06 17:37:50 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/08 19:37:28 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void	put_pixel(t_wolf3d *wolf3d, int x, int y, int color)
 {
 	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+	{
 		((int *)wolf3d->surf->pixels)[(y * wolf3d->surf->w) + x] = color;
+	}
+
 
 }
 
@@ -65,7 +68,8 @@ void	draw_floor(t_wolf3d *wolf3d, double ray_x, double ray_y, double dist, int y
 		cube.y = (int)(cur.y * 64) % 64;
 		// ft_printf("cube x = %i y = %i\n", cube.x, cube.y);
 		put_pixel(wolf3d, x, y, ((int *)wolf3d->textures[4]->pixels)[64 * cube.y + cube.x]);
-		put_pixel(wolf3d, x, HEIGHT - y, ((int *)wolf3d->textures[2]->pixels)[64 * cube.y + cube.x]);
+		// if (!(x > WIDTH - 200 && y > HEIGHT - 200))
+		put_pixel(wolf3d, x, HEIGHT - y, ((int *)wolf3d->textures[2]->pixels)[64 * cube.y + cube.x]);		
 		y++;
 	}
 	// exit(0);
@@ -100,21 +104,75 @@ void	draw_line(t_wolf3d *wolf3d, int x, t_coords line, int color)
 		y++;
 	}
 }
+//0x343434
 
-void	draw_surf(t_wolf3d *wolf3d)
+// int		get_color(t_wolf3d *wolf3d)
+// {
+// 	int		colors[9];
+
+// 	colors = {0x343434, }
+// }
+
+void	put_square(t_wolf3d *wolf3d, int x, int y, t_coords size)
+{
+	int i;
+	int	j;
+	int	color;
+
+	i = y * size.y;
+	color = 0x343434;
+	if ((int)floor(wolf3d->player->x) == x && (int)floor(wolf3d->player->y) == y)
+		color = 0xc70d3a;
+	else if (wolf3d->coords[y][x].texture)
+		color = 0x8f4426;
+	while (i < (y + 1) * size.y)
+	{
+		j = WIDTH - 200 + x * size.x;
+		while (j < WIDTH - 200 + (x + 1) * size.x)
+		{
+			// ft_printf("i = %i j = %i\n", i, j);
+			put_pixel(wolf3d, j, i, color);
+			j++;
+		}
+		i++;
+	}
+	// exit(0);
+}
+
+void	draw_minimap(t_wolf3d *wolf3d)
 {
 	int	x;
 	int	y;
+	t_coords size;
 
 	y = 0;
-	while (y < wolf3d->height + 200)
+	size.x = 200 / (wolf3d->width);
+	size.y = 200 / (wolf3d->height);
+	while (y < wolf3d->height)
 	{
 		x = 0;
-		while (x < wolf3d->width + 200)
+		while (x < wolf3d->width)
 		{
-			put_pixel(wolf3d, x, y, 0x087f23);
+			put_square(wolf3d, x, y, size);
 			x++;
 		}
 		y++;
+	}
+}
+
+void	draw_fps(t_wolf3d *wolf3d)
+{
+	TTF_Font* font = TTF_OpenFont("Aller.ttf", 24);
+
+	SDL_Color foregroundColor = { 255, 255, 255, 255 };
+	SDL_Color backgroundColor = { 0, 0, 255, 255 };
+	system("pwd");
+	if (font)
+	{
+			SDL_Surface* textSurface = TTF_RenderText_Shaded(font, "This is my text.", foregroundColor, backgroundColor);
+		ft_printf("123\n");
+		// Pass zero for width and height to draw the whole surface
+		SDL_Rect textLocation = { 100, 100, 0, 0 };
+		SDL_BlitSurface(textSurface, NULL, wolf3d->surf, &textLocation);
 	}
 }
