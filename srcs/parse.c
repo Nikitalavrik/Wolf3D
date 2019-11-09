@@ -6,28 +6,11 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 19:32:38 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/08 15:53:17 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/09 16:31:35 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_wolf.h"
-
-int				check_file(int fd)
-{
-	char	*line;
-	int		size;
-
-	line = NULL;
-	size = 0;
-	while (get_next_line(fd, &line) == 1)
-	{
-		ft_memdel((void **)&line);
-		size++;
-	}
-	ft_memdel((void **)&line);
-	close(fd);
-	return (size);
-}
 
 void			check_texture(char *texture)
 {
@@ -37,7 +20,7 @@ void			check_texture(char *texture)
 	while (texture[i])
 	{
 		if (!ft_isdigit(texture[i]))
-			print_error(texture," : non digit character\n");
+			print_error(texture, " : non digit character\n");
 		if (ft_strlen(texture) > 1)
 			print_error(texture, " : non valid size\n");
 		i++;
@@ -55,7 +38,6 @@ t_coords		**put_coords(t_coords **coords, char **splited, int y, int size)
 		coords[y][x].y = y;
 		check_texture(splited[x]);
 		coords[y][x].texture = ft_atoi(splited[x]);
-
 		if (coords[y][x].texture > 9 || coords[y][x].texture < 0)
 			print_error(splited[x], " : non valid size\n");
 		x++;
@@ -64,7 +46,8 @@ t_coords		**put_coords(t_coords **coords, char **splited, int y, int size)
 	return (coords);
 }
 
-void			check_close(char **splited, int coords_in_line, t_coords *size, int i)
+void			check_close(char **splited, int coords_in_line,
+												t_coords *size, int i)
 {
 	int	j;
 

@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 12:38:44 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/08 19:32:44 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/09 16:33:49 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,23 @@ t_wolf3d	*init_wolf3d(t_coords sizes, t_coords **coords)
 
 	wolf3d = ft_memalloc(sizeof(t_wolf3d));
 	TTF_Init();
-	if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
+	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 		print_error("SDL : ", "init error\n");
-	wolf3d->win = SDL_CreateWindow("Wolf3D", 650, 300, 1280, 720, SDL_WINDOW_SHOWN);
+	wolf3d->win = SDL_CreateWindow("Wolf3D", 650, 300, WIDTH,
+											HEIGHT, SDL_WINDOW_SHOWN);
 	if (!wolf3d->win)
 		print_error("SDL : ", "window create error\n");
 	wolf3d->surf = SDL_GetWindowSurface(wolf3d->win);
 	wolf3d->width = sizes.x;
 	wolf3d->height = sizes.y;
 	wolf3d->coords = coords;
+	wolf3d->font = TTF_OpenFont("fonts/Aller_b.ttf", 24);
+	wolf3d->fg.r = 252;
+	wolf3d->fg.g = 136;
+	wolf3d->fg.b = 3;
+	wolf3d->fg.a = 255;
+	wolf3d->speed = 0.05;
+	wolf3d->txt = 1;
 	return (wolf3d);
 }
 
@@ -45,7 +53,7 @@ void		put_player(t_player *player, t_coords **coords, t_coords size)
 			{
 				player->x = x;
 				player->y = y;
-				return ;		
+				return ;
 			}
 			x++;
 		}

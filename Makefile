@@ -6,7 +6,7 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/02 17:24:08 by nlavrine          #+#    #+#              #
-#    Updated: 2019/11/08 18:11:51 by nlavrine         ###   ########.fr        #
+#    Updated: 2019/11/09 17:16:16 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,9 @@ SRC =	main.c	\
 		draw.c		\
 		ray_casting.c	\
 		control.c		\
-		textures.c
+		textures.c		\
+		draw_utils.c	\
+		key_up_down.c
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror 
@@ -34,7 +36,6 @@ OBJ_DIR2 = obj/fractals
 LIB = libft/libft.a
 PRINTF = libft/ft_printf/libftprintf.a
 GREEN = \033[0;32m
-IMG_FRAME = -framework SDL2 -F . -framework SDL2_image -framework SDL2_ttf -rpath .
 
 INCLUDES = 	-I./frameworks/SDL2.framework/Headers/ \
 			-I./frameworks/SDL2_image.framework/Headers/ \
