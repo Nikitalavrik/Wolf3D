@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:55:43 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/09 16:01:18 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/09 17:29:55 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void	draw_floor(t_wolf3d *wolf3d, t_dcoords dist, t_coords map, int end)
 		cube.x = (int)(cur.x * 64) % 64;
 		cube.y = (int)(cur.y * 64) % 64;
 		put_pixel(wolf3d, wolf3d->x, y,
-		((int *)wolf3d->textures[4]->pixels)[64 * cube.y + cube.x]);
+		((int *)wolf3d->textures[1]->pixels)[64 * cube.y + cube.x]);
 		put_pixel(wolf3d, wolf3d->x, HEIGHT - y,
-		((int *)wolf3d->textures[2]->pixels)[64 * cube.y + cube.x]);
+		((int *)wolf3d->textures[5]->pixels)[64 * cube.y + cube.x]);
 		y++;
 	}
 }
@@ -91,7 +91,7 @@ void	draw_textures(t_wolf3d *wolf3d, t_coords line, int lineheight, int side)
 		else if (side == 2)
 			color = ((int *)wolf3d->textures[3]->pixels)[(fix_y << 6) + line.z];
 		else if (side == 3)
-			color = ((int *)wolf3d->textures[4]->pixels)[(fix_y << 6) + line.z];
+			color = ((int *)wolf3d->textures[7]->pixels)[(fix_y << 6) + line.z];
 		put_pixel(wolf3d, wolf3d->x, y, color);
 		y++;
 	}
