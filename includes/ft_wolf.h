@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 17:24:58 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/09 17:15:13 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/10 12:38:00 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "../libft/ft_printf/include/ft_printf.h"
 # include <math.h>
 # include <time.h>
+# include "SDL_mixer.h"
 # include "SDL.h"
 # include "SDL_image.h"
 # include "SDL_ttf.h"
@@ -71,12 +72,13 @@ typedef	struct	s_wolf3d
 	SDL_Color	fg;
 	SDL_Window	*win;
 	SDL_Surface	*surf;
+	Mix_Music	*music;
 	int			width;
 	int			height;
+	int			mouse;
 	t_coords	**coords;
 	t_player	*player;
 	double		frame;
-	int			xrel;
 	SDL_Surface	*textures[9];
 	double		speed;
 	int			txt;

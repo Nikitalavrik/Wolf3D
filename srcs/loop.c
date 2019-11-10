@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:38:31 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/09 16:10:22 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/10 12:38:15 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,11 @@ int		main_loop(t_wolf3d *wolf3d)
 		draw_fps(wolf3d);
 		SDL_UpdateWindowSurface(wolf3d->win);
 	}
+	SDL_FreeSurface(wolf3d->surf);
+	SDL_DestroyWindow(wolf3d->win);
+	Mix_Quit();
+	IMG_Quit();
+	SDL_Quit();
+	TTF_Quit();
 	return (0);
 }

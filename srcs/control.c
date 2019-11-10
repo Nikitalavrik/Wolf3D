@@ -6,7 +6,7 @@
 /*   By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 14:20:18 by nlavrine          #+#    #+#             */
-/*   Updated: 2019/11/09 17:14:23 by nlavrine         ###   ########.fr       */
+/*   Updated: 2019/11/10 12:35:18 by nlavrine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ void	rot_by_angl(t_wolf3d *wolf3d, double angl)
 
 void	mouse_event(t_wolf3d *wolf3d, SDL_Event event)
 {
-	if ((wolf3d->xrel > 0 && event.motion.xrel > 0) ||\
-	(wolf3d->xrel < 0 && event.motion.xrel < 0))
-		wolf3d->xrel = 0;
 	if (event.motion.xrel < 400 && event.motion.xrel > -400)
 		rot_by_angl(wolf3d, -wolf3d->frame * event.motion.xrel / MOUSE_SPEED);
 }
@@ -54,6 +51,12 @@ int		keyboard_events(t_wolf3d *wolf3d, SDL_Event event)
 		wolf3d->txt = wolf3d->txt ? 0 : 1;
 	if (event.key.keysym.sym == SDLK_LSHIFT)
 		wolf3d->speed = wolf3d->speed == 0.05 ? 0.1 : 0.05;
+	if (event.key.keysym.sym == SDLK_m && event.type != SDL_KEYUP)
+	{
+		wolf3d->mouse = wolf3d->mouse ? 0 : 1;
+		wolf3d->mouse ? SDL_SetRelativeMouseMode(SDL_ENABLE) :\
+		SDL_SetRelativeMouseMode(SDL_DISABLE);
+	}
 	return (0);
 }
 

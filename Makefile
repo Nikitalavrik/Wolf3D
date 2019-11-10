@@ -6,21 +6,21 @@
 #    By: nlavrine <nlavrine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/02 17:24:08 by nlavrine          #+#    #+#              #
-#    Updated: 2019/11/09 17:16:16 by nlavrine         ###   ########.fr        #
+#    Updated: 2019/11/10 12:08:26 by nlavrine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = wolf3d
 
-SRC =	main.c	\
-		error.c	\
-		parse.c	\
-		split.c	\
-		sys_out.c	\
-		wolf3d.c	\
-		loop.c		\
-		draw.c		\
+SRC =	main.c			\
+		error.c			\
+		parse.c			\
+		split.c			\
+		sys_out.c		\
+		wolf3d.c		\
+		loop.c			\
+		draw.c			\
 		ray_casting.c	\
 		control.c		\
 		textures.c		\
@@ -37,17 +37,18 @@ LIB = libft/libft.a
 PRINTF = libft/ft_printf/libftprintf.a
 GREEN = \033[0;32m
 
-INCLUDES = 	-I./frameworks/SDL2.framework/Headers/ \
-			-I./frameworks/SDL2_image.framework/Headers/ \
-			-I./frameworks/SDL2_ttf.framework/Headers/ \
-			-I./frameworks/SDL2_mixer.framework/Headers/ \
+INCLUDES = 	-I./frameworks/SDL2.framework/Headers/ 			\
+			-I./frameworks/SDL2_image.framework/Headers/ 	\
+			-I./frameworks/SDL2_ttf.framework/Headers/ 		\
+			-I./frameworks/SDL2_mixer.framework/Headers/ 	\
+			-F ./frameworks
 
 
-FRAMEWORKS =  	-F./frameworks \
-    			-rpath ./frameworks \
-    			-framework AppKit -framework OpenGL \
-    			-framework SDL2 -framework SDL2_image \
-    			-framework SDL2_ttf \
+FRAMEWORKS =  	-F./frameworks 								\
+    			-rpath ./frameworks 						\
+    			-framework AppKit -framework OpenGL 		\
+    			-framework SDL2 -framework SDL2_image 		\
+    			-framework SDL2_ttf -framework SDL2_mixer	\
 
 
 SRCS = $(addprefix $(SRC_DIR)/,$(SRC))
